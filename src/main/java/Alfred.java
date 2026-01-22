@@ -2,9 +2,11 @@ import java.util.Scanner;
 public class Alfred {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String[] tasks = new String[100];
+        int count = 0;
+
         System.out.println("Hello! I'm Alfred");
         System.out.println("What can I do for you?");
-        System.out.println("Bye. Hope to see you again soon!");
 
         while (true) {
             String input = scanner.nextLine();
@@ -13,11 +15,16 @@ public class Alfred {
                 break;
 
 
+            } else if (input.equals("list")) {
+                for (int i = 0; i < count; i++) {
+                    System.out.println((i + 1) + ". " + tasks[i]);
+                }
             } else {
-                System.out.println(input);
-
-
+                tasks[count] = input;
+                count++;
+                System.out.println("added: " + input);
             }
+
 
             scanner.close();
 
