@@ -55,6 +55,27 @@ public class Alfred {
                     System.out.println("OK, I've marked this task as not done yet:\n");
                     System.out.println("  " + tasks[index] + "\n");
 
+                } else if (input.startsWith("delete ")) {
+
+                    int index = Integer.parseInt(input.substring(7)) - 1;
+
+                    if (index < 0 || index >= count) {
+
+                        throw new AlfredException("Invalid task number.");
+                    }
+
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + tasks[index]);
+
+                    for (int i = index; i < count - 1; i++) {
+
+                        tasks[i] = tasks[i + 1];
+
+                    }
+                    
+                    count--;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+
                 } else if (input.startsWith("todo ")) {
 
                     String description = input.substring(5);
