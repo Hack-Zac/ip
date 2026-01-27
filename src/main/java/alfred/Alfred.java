@@ -144,6 +144,23 @@ public class Alfred {
                     System.out.println("Now you have " + count + " tasks in the list.\n");
                     save(tasks, count);
 
+                } else if (input.startsWith("find ")) {
+
+                    String keyword = input.substring(5).trim();
+
+                    if (keyword.isEmpty()) {
+                        throw new AlfredException("Please provide a keyword to search.");
+                    }
+
+                    System.out.println("Here are the matching tasks in your list:");
+                    int matchCount = 0;
+                    for (int i = 0; i < count; i++) {
+                        if (tasks[i].getDescription().contains(keyword)) {
+                            matchCount++;
+                            System.out.println(matchCount + ". " + tasks[i]);
+                        }
+                    }
+
                 } else {
 
                     throw new AlfredException("I'm sorry, but I don't know what that means :-(\n");
