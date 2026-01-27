@@ -1,9 +1,16 @@
+package alfred;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+
+import alfred.exception.AlfredException;
+import task.Task;
+import task.Deadline;
+import task.Todo;
+import task.Event;
 
 
 public class Alfred {
