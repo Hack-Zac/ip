@@ -1,11 +1,22 @@
 public class Task {
         public String description;
-        public boolean completed;
+        private boolean completed;
+
 
         public Task(String description) {
             this.description = description;
             this.completed = false;
         }
+        public String getDescription() {
+
+        return description;
+
+        }
+        public boolean isDone() {
+            return completed;
+        }
+
+
 
         public void markAsDone() {
             completed = true;
