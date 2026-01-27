@@ -1,4 +1,4 @@
-package task;
+package alfred.task;
 
 public class Task {
         public String description;

@@ -7,10 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import alfred.exception.AlfredException;
-import task.Task;
-import task.Deadline;
-import task.Todo;
-import task.Event;
+import alfred.task.Task;
+import alfred.task.Deadline;
+import alfred.task.Todo;
+import alfred.task.Event;
 
 
 public class Alfred {
@@ -50,12 +50,12 @@ public class Alfred {
 
                     if (index < 0 || index >= count) {
 
-                        throw new AlfredException("Invalid task number.\n");
+                        throw new AlfredException("Invalid alfred.task number.\n");
 
                     }
 
                     tasks[index].markAsDone();
-                    System.out.println("Nice! I've marked this task as done:\n");
+                    System.out.println("Nice! I've marked this alfred.task as done:\n");
                     System.out.println("  " + tasks[index] + "\n");
                     save(tasks, count);
 
@@ -65,12 +65,12 @@ public class Alfred {
 
                     if (index < 0 || index >= count) {
 
-                        throw new AlfredException("Invalid task number.\n");
+                        throw new AlfredException("Invalid alfred.task number.\n");
 
                     }
 
                     tasks[index].markAsNotDone();
-                    System.out.println("OK, I've marked this task as not done yet:\n");
+                    System.out.println("OK, I've marked this alfred.task as not done yet:\n");
                     System.out.println("  " + tasks[index] + "\n");
                     save(tasks, count);
 
@@ -80,10 +80,10 @@ public class Alfred {
 
                     if (index < 0 || index >= count) {
 
-                        throw new AlfredException("Invalid task number.");
+                        throw new AlfredException("Invalid alfred.task number.");
                     }
 
-                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("Noted. I've removed this alfred.task:");
                     System.out.println("  " + tasks[index]);
 
                     for (int i = index; i < count - 1; i++) {
@@ -107,7 +107,7 @@ public class Alfred {
                     }
 
                     tasks[count] = new Todo(description);
-                    System.out.println("Got it. I've added this task:\n");
+                    System.out.println("Got it. I've added this alfred.task:\n");
                     System.out.println("  " + tasks[count]);
                     count++;
                     System.out.println("Now you have " + count + " tasks in the list.\n");
@@ -138,7 +138,7 @@ public class Alfred {
 
                     String[] timeParts = parts[1].split(" /to ");
                     tasks[count] = new Event(parts[0], timeParts[0], timeParts[1]);
-                    System.out.println("Got it. I've added this task:\n");
+                    System.out.println("Got it. I've added this alfred.task:\n");
                     System.out.println("  " + tasks[count]+"\n");
                     count++;
                     System.out.println("Now you have " + count + " tasks in the list.\n");
