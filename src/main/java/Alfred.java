@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
@@ -115,12 +116,8 @@ public class Alfred {
 
                     }
 
-                    tasks[count] = new Deadline(parts[0], parts[1]);
-                    System.out.println("Got it. I've added this task:\n");
-                    System.out.println("  " + tasks[count]);
-                    count++;
-                    System.out.println("Now you have " + count + " tasks in the list.\n");
-                    save(tasks, count);
+                    LocalDate by = LocalDate.parse(parts[1]);
+                    tasks[count] = new Deadline(parts[0], by);
 
                 } else if (input.startsWith("event ")) {
 
@@ -223,7 +220,7 @@ public class Alfred {
                 task = new Todo(parts[2]);
                 break;
             case "D":
-                task = new Deadline(parts[2], parts[3]);
+                task = new Deadline(parts[2], LocalDate.parse(parts[3]));
                 break;
             case "E":
                 task = new Event(parts[2], parts[3], parts[4]);
