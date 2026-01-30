@@ -1,8 +1,21 @@
 package alfred.task;
 
+/**
+ * Represents an event with a start and end time.
+ */
+
 public class Event extends Task {
     public String from;
     public String to;
+
+    /**
+     * Creates a new event.
+     *
+     * @param description The event description.
+     * @param from The start time.
+     * @param to The end time.
+     */
+
 
     public Event(String description, String from, String to) {
         super(description);

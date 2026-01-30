@@ -1,9 +1,18 @@
 package alfred.task;
+/**
+ * Represents a task with a description and completion status.
+ */
+
 
 public class Task {
         public String description;
         private boolean completed;
 
+    /**
+     * Creates a new task with the given description.
+     *
+     * @param description The task description.
+     */
 
         public Task(String description) {
             this.description = description;
@@ -19,12 +28,20 @@ public class Task {
         }
 
 
+    /**
+     * Marks the task as done.
+     */
 
         public void markAsDone() {
             completed = true;
         }
 
-        public void markAsNotDone() {
+    /**
+     * Marks the task as not done.
+     */
+
+
+    public void markAsNotDone() {
             completed = false;
         }
 
