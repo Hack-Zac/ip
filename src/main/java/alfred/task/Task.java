@@ -2,12 +2,12 @@ package alfred.task;
 
 public class Task {
         public String description;
-        private boolean completed;
+        private boolean isDone;
 
 
         public Task(String description) {
             this.description = description;
-            this.completed = false;
+            this.isDone = false;
         }
         public String getDescription() {
 
@@ -15,21 +15,21 @@ public class Task {
 
         }
         public boolean isDone() {
-            return completed;
+            return isDone;
         }
 
 
 
         public void markAsDone() {
-            completed = true;
+            isDone = true;
         }
 
         public void markAsNotDone() {
-            completed = false;
+            isDone = false;
         }
 
         public String getIcon() {
-            return completed ? "X" : " ";
+            return isDone ? "X" : " ";
         }
 
         @Override

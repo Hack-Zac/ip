@@ -27,44 +27,43 @@ public class Alfred {
                 String command = Parser.getCommand(input);
 
                 switch (command) {
-                    case "bye":
-                        ui.displayBye();
-                        return;
+                case "bye":
+                    ui.displayBye();
+                    return;
+                case "list":
+                    ui.displayTaskList(tasks);
+                    break;
 
-                    case "list":
-                        ui.displayTaskList(tasks);
-                        break;
+                case "mark":
+                    parseMark(input);
+                    break;
 
-                    case "mark":
-                        parseMark(input);
-                        break;
+                case "unmark":
+                    parseUnmark(input);
+                    break;
 
-                    case "unmark":
-                        parseUnmark(input);
-                        break;
+                case "delete":
+                    parseDelete(input);
+                    break;
 
-                    case "delete":
-                        parseDelete(input);
-                        break;
+                case "todo":
+                    parseTodo(input);
+                    break;
 
-                    case "todo":
-                        parseTodo(input);
-                        break;
+                case "deadline":
+                    parseDeadline(input);
+                    break;
 
-                    case "deadline":
-                        parseDeadline(input);
-                        break;
+                case "event":
+                    parseEvent(input);
+                    break;
 
-                    case "event":
-                        parseEvent(input);
-                        break;
+                case "find":
+                    parseFind(input);
+                    break;
 
-                    case "find":
-                        parseFind(input);
-                        break;
-
-                    default:
-                        throw new AlfredException("I'm sorry, but I don't know what that means :-(");
+                default:
+                    throw new AlfredException("I'm sorry, but I don't know what that means :-(");
                 }
 
             } catch (AlfredException e) {
