@@ -1,259 +1,141 @@
 package alfred;
 
-import java.time.LocalDate;
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import alfred.exception.AlfredException;
 import alfred.task.Task;
-import alfred.task.Deadline;
-import alfred.task.Todo;
-import alfred.task.Event;
-
+import java.util.ArrayList;
 
 public class Alfred {
     private static final String FILE_PATH = "./data/alfred.txt";
-    public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[100];
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
-        int count = 0;
-        count = load(tasks);
+    public Alfred(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        tasks = new TaskList(storage.load());
+    }
 
-
-        System.out.println("Hello! I'm Alfred\n");
-        System.out.println("What can I do for you?\n");
+    public void run() {
+        ui.displayWelcome();
 
         while (true) {
-            String input = scanner.nextLine();
+            String input = ui.readCommand();
 
             try {
-                if (input.equals("bye")) {
+                String command = Parser.getCommand(input);
 
-                    System.out.println("Bye. Hope to see you again soon!\n");
-                    break;
+                switch (command) {
+                    case "bye":
+                        ui.displayBye();
+                        return;
 
-                } else if (input.equals("list")) {
+                    case "list":
+                        ui.displayTaskList(tasks);
+                        break;
 
-                    for (int i = 0; i < count; i++) {
+                    case "mark":
+                        parseMark(input);
+                        break;
 
-                        System.out.println((i + 1) + ". " + tasks[i]);
+                    case "unmark":
+                        parseUnmark(input);
+                        break;
 
-                    }
+                    case "delete":
+                        parseDelete(input);
+                        break;
 
-                } else if (input.startsWith("mark ")) {
+                    case "todo":
+                        parseTodo(input);
+                        break;
 
-                    int index = Integer.parseInt(input.substring(5)) - 1;
+                    case "deadline":
+                        parseDeadline(input);
+                        break;
 
-                    if (index < 0 || index >= count) {
+                    case "event":
+                        parseEvent(input);
+                        break;
 
-                        throw new AlfredException("Invalid alfred.task number.\n");
+                    case "find":
+                        parseFind(input);
+                        break;
 
-                    }
-
-                    tasks[index].markAsDone();
-                    System.out.println("Nice! I've marked this alfred.task as done:\n");
-                    System.out.println("  " + tasks[index] + "\n");
-                    save(tasks, count);
-
-                } else if (input.startsWith("unmark ")) {
-
-                    int index = Integer.parseInt(input.substring(7)) - 1;
-
-                    if (index < 0 || index >= count) {
-
-                        throw new AlfredException("Invalid alfred.task number.\n");
-
-                    }
-
-                    tasks[index].markAsNotDone();
-                    System.out.println("OK, I've marked this alfred.task as not done yet:\n");
-                    System.out.println("  " + tasks[index] + "\n");
-                    save(tasks, count);
-
-                } else if (input.startsWith("delete ")) {
-
-                    int index = Integer.parseInt(input.substring(7)) - 1;
-
-                    if (index < 0 || index >= count) {
-
-                        throw new AlfredException("Invalid alfred.task number.");
-                    }
-
-                    System.out.println("Noted. I've removed this alfred.task:");
-                    System.out.println("  " + tasks[index]);
-
-                    for (int i = index; i < count - 1; i++) {
-
-                        tasks[i] = tasks[i + 1];
-
-                    }
-
-                    count--;
-                    System.out.println("Now you have " + count + " tasks in the list.");
-                    save(tasks, count);
-
-                } else if (input.startsWith("todo ")) {
-
-                    String description = input.substring(5);
-
-                    if (description.trim().isEmpty()) {
-
-                        throw new AlfredException("The description of a todo cannot be empty.\n");
-
-                    }
-
-                    tasks[count] = new Todo(description);
-                    System.out.println("Got it. I've added this alfred.task:\n");
-                    System.out.println("  " + tasks[count]);
-                    count++;
-                    System.out.println("Now you have " + count + " tasks in the list.\n");
-                    save(tasks, count);
-
-                } else if (input.startsWith("deadline ")) {
-
-                    String[] parts = input.substring(9).split(" /by ");
-
-                    if (parts.length < 2) {
-
-                        throw new AlfredException("Invalid deadline format.\n");
-
-                    }
-
-                    LocalDate by = LocalDate.parse(parts[1]);
-                    tasks[count] = new Deadline(parts[0], by);
-
-                } else if (input.startsWith("event ")) {
-
-                    String[] parts = input.substring(6).split(" /from ");
-
-                    if (parts.length < 2 || !parts[1].contains(" /to ")) {
-
-                        throw new AlfredException("Invalid event format.\n");
-
-                    }
-
-                    String[] timeParts = parts[1].split(" /to ");
-                    tasks[count] = new Event(parts[0], timeParts[0], timeParts[1]);
-                    System.out.println("Got it. I've added this alfred.task:\n");
-                    System.out.println("  " + tasks[count]+"\n");
-                    count++;
-                    System.out.println("Now you have " + count + " tasks in the list.\n");
-                    save(tasks, count);
-
-                } else if (input.startsWith("find ")) {
-
-                    String keyword = input.substring(5).trim();
-
-                    if (keyword.isEmpty()) {
-                        throw new AlfredException("Please provide a keyword to search.");
-                    }
-
-                    System.out.println("Here are the matching tasks in your list:");
-                    int matchCount = 0;
-                    for (int i = 0; i < count; i++) {
-                        if (tasks[i].getDescription().contains(keyword)) {
-                            matchCount++;
-                            System.out.println(matchCount + ". " + tasks[i]);
-                        }
-                    }
-
-                } else {
-
-                    throw new AlfredException("I'm sorry, but I don't know what that means :-(\n");
-
+                    default:
+                        throw new AlfredException("I'm sorry, but I don't know what that means :-(");
                 }
 
             } catch (AlfredException e) {
-
-                System.out.println("OOPS!!! " + e.getMessage() + "\n");
-
+                ui.displayError(e.getMessage());
             } catch (Exception e) {
-
-                System.out.println("OOPS!!! Something went wrong.\n");
-
+                ui.displayError("Something went wrong.");
             }
         }
     }
 
-    private static void save(Task[] tasks, int count) {
-        try {
-            File file = new File(FILE_PATH);
-            file.getParentFile().mkdirs();
-
-            FileWriter writer = new FileWriter(file);
-            for (int i = 0; i < count; i++) {
-                writer.write(taskToString(tasks[i]) + "\n");
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Error saving tasks: " + e.getMessage());
+    private void parseMark(String input) throws AlfredException {
+        int index = Parser.getIndex(input, "mark");
+        if (index < 0 || index >= tasks.size()) {
+            throw new AlfredException("Invalid task number.");
         }
+        tasks.get(index).markAsDone();
+        ui.displayTaskMarked(tasks.get(index));
+        storage.save(tasks);
     }
 
-    private static int load(Task[] tasks) {
-        File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            return 0;
+    private void parseUnmark(String input) throws AlfredException {
+        int index = Parser.getIndex(input, "unmark");
+        if (index < 0 || index >= tasks.size()) {
+            throw new AlfredException("Invalid task number.");
         }
-
-        int count = 0;
-        try {
-            Scanner fileScanner = new Scanner(file);
-            while (fileScanner.hasNextLine()) {
-                Task task = stringToTask(fileScanner.nextLine());
-                if (task != null) {
-                    tasks[count++] = task;
-                }
-            }
-            fileScanner.close();
-        } catch (IOException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
-        }
-        return count;
+        tasks.get(index).markAsNotDone();
+        ui.displayTaskUnmarked(tasks.get(index));
+        storage.save(tasks);
     }
 
-    private static String taskToString(Task task) {
-        String type = task instanceof Todo ? "T"
-                : task instanceof Deadline ? "D" : "E";
-        String done = task.isDone() ? "√" : "X";
-
-        if (task instanceof Deadline) {
-            Deadline d = (Deadline) task;
-            return type + " | " + done + " | " + d.getDescription() + " | " + d.getBy();
-        } else if (task instanceof Event) {
-            Event e = (Event) task;
-            return type + " | " + done + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
-        } else {
-            return type + " | " + done + " | " + task.getDescription();
+    private void parseDelete(String input) throws AlfredException {
+        int index = Parser.getIndex(input, "delete");
+        if (index < 0 || index >= tasks.size()) {
+            throw new AlfredException("Invalid task number.");
         }
+        Task removed = tasks.delete(index);
+        ui.displayTaskDeleted(removed, tasks.size());
+        storage.save(tasks);
     }
 
-    private static Task stringToTask(String line) {
-        String[] parts = line.split(" \\| ");
-        if (parts.length < 3) return null;
+    private void parseTodo(String input) throws AlfredException {
+        Task task = Parser.parseTodo(input);
+        tasks.add(task);
+        ui.displayTaskAdded(task, tasks.size());
+        storage.save(tasks);
+    }
 
-        boolean isDone = parts[1].equals("√");
-        Task task;
+    private void parseDeadline(String input) throws AlfredException {
+        Task task = Parser.parseDeadline(input);
+        tasks.add(task);
+        ui.displayTaskAdded(task, tasks.size());
+        storage.save(tasks);
+    }
 
-        switch (parts[0]) {
-            case "T":
-                task = new Todo(parts[2]);
-                break;
-            case "D":
-                task = new Deadline(parts[2], LocalDate.parse(parts[3]));
-                break;
-            case "E":
-                task = new Event(parts[2], parts[3], parts[4]);
-                break;
-            default:
-                return null;
+    private void parseEvent(String input) throws AlfredException {
+        Task task = Parser.parseEvent(input);
+        tasks.add(task);
+        ui.displayTaskAdded(task, tasks.size());
+        storage.save(tasks);
+    }
+
+    private void parseFind(String input) throws AlfredException {
+        String keyword = Parser.getKeyword(input);
+        if (keyword.isEmpty()) {
+            throw new AlfredException("Please provide a keyword to search.");
         }
+        ArrayList<Task> found = tasks.find(keyword);
+        ui.displayFoundTasks(found);
+    }
 
-        if (isDone) task.markAsDone();
-        return task;
+    public static void main(String[] args) {
+        new Alfred(FILE_PATH).run();
     }
 }
