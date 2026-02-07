@@ -5,7 +5,6 @@ import alfred.task.Task;
 import alfred.task.Todo;
 import alfred.task.Deadline;
 import alfred.task.Event;
-
 import java.time.LocalDate;
 
 public class Parser {
