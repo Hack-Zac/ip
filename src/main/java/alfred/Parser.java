@@ -9,6 +9,10 @@ import java.time.LocalDate;
 
 public class Parser {
 
+    private static final int DEADLINE_PREFIX_LENGTH = "deadline ".length();
+    private static final String DEADLINE_SEPARATOR = " /by ";
+
+
     public static String getCommand(String input) {
         return input.split(" ")[0];
     }
@@ -30,7 +34,7 @@ public class Parser {
     }
 
     public static Task parseDeadline(String input) throws AlfredException {
-        String[] parts = input.substring(9).split(" /by ");
+        String[] parts = input.substring(DEADLINE_PREFIX_LENGTH).split(DEADLINE_SEPARATOR);
         if (parts.length < 2) {
             throw new AlfredException("Invalid deadline format.");
         }
@@ -46,4 +50,6 @@ public class Parser {
         String[] timeParts = parts[1].split(" /to ");
         return new Event(parts[0], timeParts[0], timeParts[1]);
     }
+
+
 }
