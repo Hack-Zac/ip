@@ -64,6 +64,10 @@ public class Alfred {
                 case "find":
                     return parseFind(input);
 
+                case "note":
+                    return parseNote(input);
+
+
                 default:
                     return handleUnknown();
             }
@@ -165,6 +169,21 @@ public class Alfred {
         return s.trim();
     }
 
+    private String parseNote(String input) throws AlfredException {
+        String[] noteData = Parser.parseNote(input);
+        int index = Integer.parseInt(noteData[0]) - 1;
+        String noteContent = noteData[1];
+
+        if (!isValidIndex(index)) {
+            throw new AlfredException("Invalid task number.");
+        }
+
+        tasks.get(index).setNotes(noteContent);
+        storage.save(tasks);
+        return "Got it. I've added a note to this task:\n  " + tasks.get(index);
+    }
+
+
 
     public void run() {
         ui.displayWelcome();
@@ -211,6 +230,12 @@ public class Alfred {
                     case "find":
                         parseFind(input);
                         break;
+
+
+                    case "note":
+                        parseNote(input);
+                        break;
+
 
                     default:
                         throw new AlfredException("I'm sorry, but I don't know what that means :-(");

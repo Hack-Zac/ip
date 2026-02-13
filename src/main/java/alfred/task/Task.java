@@ -1,57 +1,77 @@
 package alfred.task;
+
 /**
  * Represents a task with a description and completion status.
  */
-
-
 public class Task {
-        public String description;
-        private boolean completed;
+    protected String description;
+    protected boolean isDone;
+    protected String notes;
 
     /**
-     * Creates a new task with the given description.
+     * Creates a new Task with the given description.
      *
      * @param description The task description.
      */
+    public Task(String description) {
+        this.description = description;
+        this.isDone = false;
+        this.notes = "";
+    }
 
-        public Task(String description) {
-            this.description = description;
-            this.completed = false;
-        }
-        public String getDescription() {
+    public String getStatusIcon() {
+        return (isDone ? "X" : " ");
+    }
 
-        return description;
-
-        }
-        public boolean isDone() {
-            return completed;
-        }
-
-
-    /**
-     * Marks the task as done.
-     */
-
-        public void markAsDone() {
-            completed = true;
-        }
-
-    /**
-     * Marks the task as not done.
-     */
-
+    public void markAsDone() {
+        isDone = true;
+    }
 
     public void markAsNotDone() {
-            completed = false;
-        }
+        isDone = false;
+    }
 
-        public String getIcon() {
-            return completed ? "X" : " ";
-        }
+    public boolean isDone() {
+        return isDone;
+    }
 
-        @Override
-        public String toString() {
-            return "[" + getIcon() + "] " + description;
-        }
+    public String getDescription() {
+        return description;
+    }
 
+    /**
+     * Sets notes for this task.
+     *
+     * @param notes The notes to add.
+     */
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    /**
+     * Gets the notes for this task.
+     *
+     * @return The notes, or empty string if none.
+     */
+    public String getNotes() {
+        return notes;
+    }
+
+    /**
+     * Checks if this task has notes.
+     *
+     * @return True if notes exist.
+     */
+    public boolean hasNotes() {
+        return notes != null && !notes.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        String base = "[" + getStatusIcon() + "] " + description;
+        if (hasNotes()) {
+            base += "\n   Notes: " + notes;
+        }
+        return base;
+    }
 }
