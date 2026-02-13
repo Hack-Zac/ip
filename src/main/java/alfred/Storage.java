@@ -44,6 +44,7 @@ public class Storage {
 
     public void save(TaskList taskList) {
         try {
+            assert taskList != null : "TaskList should not be null";
             File file = new File(filePath);
             file.getParentFile().mkdirs();
 

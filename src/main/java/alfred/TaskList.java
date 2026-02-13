@@ -15,14 +15,19 @@ public class TaskList {
     }
 
     public void add(Task task) {
+        assert task != null : "Task should not be null";
         tasks.add(task);
     }
 
     public Task delete(int index) {
+        assert index >= 0 : "Index should not be negative";
+        assert index < tasks.size() : "Index should be within list bounds";
         return tasks.remove(index);
     }
 
     public Task get(int index) {
+        assert index >= 0 : "Index should not be negative";
+        assert index < tasks.size() : "Index should be within list bounds";
         return tasks.get(index);
     }
 

@@ -26,6 +26,7 @@ public class Parser {
     }
 
     public static Task parseTodo(String input) throws AlfredException {
+        assert input != null : "Input should not be null";
         String description = input.substring(5);
         if (description.trim().isEmpty()) {
             throw new AlfredException("The description of a todo cannot be empty.");
@@ -35,6 +36,8 @@ public class Parser {
 
     public static Task parseDeadline(String input) throws AlfredException {
         String[] parts = input.substring(DEADLINE_PREFIX_LENGTH).split(DEADLINE_SEPARATOR);
+        assert input != null : "Input should not be null";
+        String[] parts = input.substring(9).split(" /by ");
         if (parts.length < 2) {
             throw new AlfredException("Invalid deadline format.");
         }
@@ -43,6 +46,7 @@ public class Parser {
     }
 
     public static Task parseEvent(String input) throws AlfredException {
+        assert input != null : "Input should not be null";
         String[] parts = input.substring(6).split(" /from ");
         if (parts.length < 2 || !parts[1].contains(" /to ")) {
             throw new AlfredException("Invalid event format.");
