@@ -38,7 +38,7 @@ public class Alfred {
 
             switch (command) {
                 case "bye":
-                    return "Bye. Hope to see you again soon!";
+                    return handleBye();
 
                 case "list":
                     return getTasks();
@@ -65,15 +65,29 @@ public class Alfred {
                     return parseFind(input);
 
                 default:
-                    return "I'm sorry, but I don't know what that means :-(";
+                    return handleUnknown();
             }
 
         } catch (AlfredException e) {
-            return "OOPS!!! " + e.getMessage();
+            return formatError(e.getMessage());
         } catch (Exception e) {
-            return "OOPS!!! Something went wrong.";
+            return formatError("Something went wrong.");
+
         }
     }
+
+    private String formatError(String message) {
+        return "OOPS!!! " + message;
+    }
+
+    private String handleBye() {
+        return "Bye. Hope to see you again soon!";
+    }
+
+    private String handleUnknown() {
+        return "I'm sorry, but I don't know what that means :-(";
+    }
+
 
     private String getTasks() {
         String s = new String();
@@ -209,6 +223,11 @@ public class Alfred {
             }
         }
     }
+
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < tasks.size();
+    }
+
 
     public static void main(String[] args) {
         new Alfred(DEFAULT_FILE_PATH).run();
