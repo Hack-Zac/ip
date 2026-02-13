@@ -62,15 +62,16 @@ public class Storage {
         String type = task instanceof Todo ? "T"
                 : task instanceof Deadline ? "D" : "E";
         String done = task.isDone() ? "1" : "0";
+        String notes = task.getNotes();
 
         if (task instanceof Deadline) {
             Deadline d = (Deadline) task;
-            return type + " | " + done + " | " + d.getDescription() + " | " + d.getBy();
+            return type + " | " + done + " | " + d.getDescription() + " | " + d.getBy() + " | " + notes;
         } else if (task instanceof Event) {
             Event e = (Event) task;
-            return type + " | " + done + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+            return type + " | " + done + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo() + " | " + notes;
         } else {
-            return type + " | " + done + " | " + task.getDescription();
+            return type + " | " + done + " | " + task.getDescription() + " | " + notes;
         }
     }
 
@@ -80,22 +81,27 @@ public class Storage {
 
         boolean isDone = parts[1].equals("1");
         Task task;
+        String notes = "";
 
         switch (parts[0]) {
             case "T":
                 task = new Todo(parts[2]);
+                if (parts.length > 3) notes = parts[3];
                 break;
             case "D":
                 task = new Deadline(parts[2], LocalDate.parse(parts[3]));
+                if (parts.length > 4) notes = parts[4];
                 break;
             case "E":
                 task = new Event(parts[2], parts[3], parts[4]);
+                if (parts.length > 5) notes = parts[5];
                 break;
             default:
                 return null;
         }
 
         if (isDone) task.markAsDone();
+        if (!notes.isEmpty()) task.setNotes(notes);
         return task;
     }
 }
