@@ -33,6 +33,7 @@ public class Alfred {
      */
     public String getResponse(String input) {
         try {
+            assert input != null : "Input should not be null";
             String command = Parser.getCommand(input);
 
             switch (command) {
