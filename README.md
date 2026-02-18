@@ -1,6 +1,7 @@
 # Alfred
 
-> "Why do we fall, so we can learn to pick ourselves up." - Your personal task manager
+> "Why do we fall Master Wayne? So we can learn to pick ourselves up!
+" - Your personal task manager
 
 Alfred is a **desktop task management application** with a snotty English butler personality. It helps you manage your todos, deadlines, and events with ease while you fight crime on the streets of Gotham.
 

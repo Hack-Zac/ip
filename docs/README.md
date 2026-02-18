@@ -2,7 +2,7 @@
 Why do we fall Master Wayne? So we can learn to pick ourselves up!
 ![Ui](Ui.png)
 
-Alfred is your personal task management butler, designed to help you keep track of your todos, deadlines, and events with ease as you fight on the streets of Gotham.
+Alfred is your personal task management butler, made to help you keep track of your todos, deadlines, and events with ease as you fight on the streets of Gotham.
 
 ---
 
