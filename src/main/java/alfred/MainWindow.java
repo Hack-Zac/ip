@@ -7,6 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
+
 
 /**
  * Controller for the main GUI.
@@ -23,15 +27,15 @@ public class MainWindow extends AnchorPane {
 
     private Alfred alfred;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image alfredImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/bat.png"));
+    private Image alfredImage = new Image(this.getClass().getResourceAsStream("/images/butler.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         // Show welcome message
         dialogContainer.getChildren().add(
-                DialogBox.getAlfredDialog("Hello! I'm Alfred\nWhat can I do for you?", alfredImage)
+                DialogBox.getAlfredDialog("Good evening Master Wayne! How may I be of service today?", alfredImage)
         );
     }
 
@@ -51,7 +55,27 @@ public class MainWindow extends AnchorPane {
         if (input.isEmpty()) {
             return;
         }
+
+        if (input.trim().equals("bye")) {
+            // Disable input to prevent further interaction
+            userInput.setDisable(true);
+            sendButton.setDisable(true);
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+            delay.setOnFinished(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            delay.play();
+        }
+
         String response = alfred.getResponse(input);
+        DialogBox alfredDialog;
+        if (response.startsWith("CRIKEY!!!")) {
+            alfredDialog = DialogBox.getAlfredErrorDialog(response, alfredImage);
+        } else {
+            alfredDialog = DialogBox.getAlfredDialog(response, alfredImage);
+        }
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getAlfredDialog(response, alfredImage)

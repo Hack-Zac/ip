@@ -33,7 +33,7 @@ public class Alfred {
      */
     public String getResponse(String input) {
         try {
-            assert input != null : "Input should not be null";
+            assert input != null : "I'm sorry sir! Input should not be null!";
             String command = Parser.getCommand(input);
 
             switch (command) {
@@ -75,21 +75,21 @@ public class Alfred {
         } catch (AlfredException e) {
             return formatError(e.getMessage());
         } catch (Exception e) {
-            return formatError("Something went wrong.");
+            return formatError("I'm sorry Sir! Something went wrong!");
 
         }
     }
 
     private String formatError(String message) {
-        return "OOPS!!! " + message;
+        return "Crikey!!! " + message;
     }
 
     private String handleBye() {
-        return "Bye. Hope to see you again soon!";
+        return "Goodbye Sir! Happy Hunting!";
     }
 
     private String handleUnknown() {
-        return "I'm sorry, but I don't know what that means :-(";
+        return "I'm sorry Sir, but I don't know what that means :-(";
     }
 
 
@@ -104,31 +104,31 @@ public class Alfred {
     private String parseMark(String input) throws AlfredException {
         int index = Parser.getIndex(input, "mark");
         if (index < 0 || index >= tasks.size()) {
-            throw new AlfredException("Invalid task number.");
+            throw new AlfredException("I'm sorry Sir! That's an invalid task number!\n");
         }
         tasks.get(index).markAsDone();
         storage.save(tasks);
-        return "Nice! I've marked this task as done:\n  " + tasks.get(index);
+        return "Very good Sir! I've marked this task as done:\n  " + tasks.get(index);
     }
 
     private String parseUnmark(String input) throws AlfredException {
         int index = Parser.getIndex(input, "unmark");
         if (index < 0 || index >= tasks.size()) {
-            throw new AlfredException("Invalid task number.");
+            throw new AlfredException("I'm sorry Sir! That's an invalid task number!\n");
         }
         tasks.get(index).markAsNotDone();
         storage.save(tasks);
-        return "OK, I've marked this task as not done yet:\n  " + tasks.get(index);
+        return "Alright Sir, I've marked this task as not done yet:\n  " + tasks.get(index);
     }
 
     private String parseDelete(String input) throws AlfredException {
         int index = Parser.getIndex(input, "delete");
         if (index < 0 || index >= tasks.size()) {
-            throw new AlfredException("Invalid task number.");
+            throw new AlfredException("I'm sorry Sir! That's an invalid task number!\n");
         }
         Task removed = tasks.delete(index);
         storage.save(tasks);
-        return "Noted. I've removed this task:\n  " + removed
+        return "Very Good Sir. I've removed this task:\n  " + removed
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
@@ -136,7 +136,7 @@ public class Alfred {
         Task task = Parser.parseTodo(input);
         tasks.add(task);
         storage.save(tasks);
-        return "Got it. I've added this task:\n  " + task
+        return "Very Good Sir, I've added this task:\n  " + task
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
@@ -144,7 +144,7 @@ public class Alfred {
         Task task = Parser.parseDeadline(input);
         tasks.add(task);
         storage.save(tasks);
-        return "Got it. I've added this task:\n  " + task
+        return "Very Good Sir, I've added this task:\n  " + task
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
@@ -152,17 +152,17 @@ public class Alfred {
         Task task = Parser.parseEvent(input);
         tasks.add(task);
         storage.save(tasks);
-        return "Got it. I've added this task:\n  " + task
+        return "Very Good Sir, I've added this task:\n  " + task
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     private String parseFind(String input) throws AlfredException {
         String keyword = Parser.getKeyword(input);
         if (keyword.isEmpty()) {
-            throw new AlfredException("Please provide a keyword to search.");
+            throw new AlfredException("Please provide a keyword to search, Sir.");
         }
         ArrayList<Task> found = tasks.find(keyword);
-        String s = "Here are the matching tasks in your list:\n";
+        String s = "Here are the matching tasks in your list, Sir:\n";
         for (int i = 0; i < found.size(); i++) {
             s = s + ((i + 1)) + (". ") + (found.get(i)) + ("\n");
         }
@@ -175,12 +175,12 @@ public class Alfred {
         String noteContent = noteData[1];
 
         if (!isValidIndex(index)) {
-            throw new AlfredException("Invalid task number.");
+            throw new AlfredException("I'm sorry Sir! That's an invalid task number!\n");
         }
 
         tasks.get(index).setNotes(noteContent);
         storage.save(tasks);
-        return "Got it. I've added a note to this task:\n  " + tasks.get(index);
+        return "Very Good Sir, I've added a note to this task:\n  " + tasks.get(index);
     }
 
 
@@ -238,13 +238,13 @@ public class Alfred {
 
 
                     default:
-                        throw new AlfredException("I'm sorry, but I don't know what that means :-(");
+                        throw new AlfredException("I'm sorry Sir, but I don't know what that means :-(");
                 }
 
             } catch (AlfredException e) {
                 ui.displayError(e.getMessage());
             } catch (Exception e) {
-                ui.displayError("Something went wrong.");
+                ui.displayError("Crikey!!! Something went wrong.");
             }
         }
     }

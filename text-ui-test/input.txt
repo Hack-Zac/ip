@@ -1,10 +1,16 @@
 todo read book
-todo return book
-deadline submit assignment /by Sunday
-event project meeting /from Mon 2pm /to 4pm
+deadline submit report /by 2024-01-27
+deadline meeting prep /by 2024-01-27 14:00
+event conference /from 2024-01-27 /to 2024-01-29
+event standup /from 2024-01-27 09:00 /to 2024-01-27 09:30
 list
 mark 1
+list
+unmark 1
 delete 2
+list
+find book
+note 1 Chapter 5 is important
 list
 blah
 bye

@@ -9,11 +9,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
     private final String filePath;
+    private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -66,10 +69,15 @@ public class Storage {
 
         if (task instanceof Deadline) {
             Deadline d = (Deadline) task;
-            return type + " | " + done + " | " + d.getDescription() + " | " + d.getBy() + " | " + notes;
+            String hasTime = d.hasTime() ? "1" : "0";
+            String dateStr = d.getBy().format(DATE_TIME_FORMAT);
+            return type + " | " + done + " | " + d.getDescription() + " | " + dateStr + " | " + hasTime + " | " + notes;
         } else if (task instanceof Event) {
             Event e = (Event) task;
-            return type + " | " + done + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo() + " | " + notes;
+            String hasTime = e.hasTime() ? "1" : "0";
+            String fromStr = e.getFrom().format(DATE_TIME_FORMAT);
+            String toStr = e.getTo().format(DATE_TIME_FORMAT);
+            return type + " | " + done + " | " + e.getDescription() + " | " + fromStr + " | " + toStr + " | " + hasTime + " | " + notes;
         } else {
             return type + " | " + done + " | " + task.getDescription() + " | " + notes;
         }
@@ -89,12 +97,31 @@ public class Storage {
                 if (parts.length > 3) notes = parts[3];
                 break;
             case "D":
-                task = new Deadline(parts[2], LocalDate.parse(parts[3]));
-                if (parts.length > 4) notes = parts[4];
+                // Format: D | done | description | datetime | hasTime | notes
+                boolean deadlineHasTime = parts.length > 4 && parts[4].equals("1");
+                if (deadlineHasTime) {
+                    LocalDateTime by = LocalDateTime.parse(parts[3], DATE_TIME_FORMAT);
+                    task = new Deadline(parts[2], by);
+                } else {
+                    // Parse as datetime but use date-only constructor
+                    LocalDateTime dt = LocalDateTime.parse(parts[3], DATE_TIME_FORMAT);
+                    task = new Deadline(parts[2], dt.toLocalDate());
+                }
+                if (parts.length > 5) notes = parts[5];
                 break;
             case "E":
-                task = new Event(parts[2], parts[3], parts[4]);
-                if (parts.length > 5) notes = parts[5];
+                // Format: E | done | description | from | to | hasTime | notes
+                boolean eventHasTime = parts.length > 5 && parts[5].equals("1");
+                if (eventHasTime) {
+                    LocalDateTime from = LocalDateTime.parse(parts[3], DATE_TIME_FORMAT);
+                    LocalDateTime to = LocalDateTime.parse(parts[4], DATE_TIME_FORMAT);
+                    task = new Event(parts[2], from, to);
+                } else {
+                    LocalDateTime fromDt = LocalDateTime.parse(parts[3], DATE_TIME_FORMAT);
+                    LocalDateTime toDt = LocalDateTime.parse(parts[4], DATE_TIME_FORMAT);
+                    task = new Event(parts[2], fromDt.toLocalDate(), toDt.toLocalDate());
+                }
+                if (parts.length > 6) notes = parts[6];
                 break;
             default:
                 return null;

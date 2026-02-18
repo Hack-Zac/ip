@@ -1,0 +1,180 @@
+.root {
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-background-color: linear-gradient(to bottom, #0a0a0f, #12121a, #0d0d12);
+}
+
+/* ==================== SCROLL PANE ==================== */
+
+#scrollPane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+#scrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ==================== SCROLLBAR STYLING ==================== */
+
+#scrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+#scrollPane .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(212, 175, 55, 0.4);
+    -fx-background-radius: 4;
+}
+
+#scrollPane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgba(212, 175, 55, 0.7);
+}
+
+#scrollPane .scroll-bar:vertical .track {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 4;
+}
+
+#scrollPane .scroll-bar:vertical .increment-button,
+#scrollPane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+#scrollPane .scroll-bar:vertical .increment-arrow,
+#scrollPane .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+/* ==================== DIALOG CONTAINER ==================== */
+
+#dialogContainer {
+    -fx-background-color: transparent;
+    -fx-padding: 20;
+    -fx-spacing: 18;
+}
+
+/* ==================== DIALOG BOX ==================== */
+
+.dialog-box {
+    -fx-spacing: 12;
+    -fx-padding: 5 10 5 10;
+}
+
+.dialog-label {
+    -fx-padding: 14 18 14 18;
+    -fx-background-radius: 12;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 10, 0, 0, 4);
+}
+
+.user-label {
+    -fx-background-color: linear-gradient(to bottom right, #1a1a2e, #252540);
+    -fx-background-radius: 12 12 2 12;
+    -fx-border-color: #3d3d5c;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12 12 2 12;
+}
+
+.user-label .dialog-text {
+    -fx-fill: #c0c0c0;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 14px;
+}
+
+.alfred-label {
+    -fx-background-color: linear-gradient(to bottom right, #1a1a14, #2a2a20);
+    -fx-background-radius: 12 12 12 2;
+    -fx-border-color: #4a4a3a;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12 12 12 2;
+}
+
+.alfred-label .dialog-text {
+    -fx-fill: #d4af37;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 14px;
+}
+
+/* Error message - warning red */
+.error-label {
+    -fx-background-color: linear-gradient(to bottom right, #2a1a1a, #3d2020);
+    -fx-background-radius: 12 12 12 2;
+    -fx-border-color: #6b2020;
+    -fx-border-width: 2px;
+    -fx-border-radius: 12 12 12 2;
+}
+
+.error-label .dialog-text {
+    -fx-fill: #ff6b6b;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 14px;
+}
+
+/* ==================== AVATAR STYLING ==================== */
+
+.user-img {
+    -fx-effect: dropshadow(gaussian, #3d3d5c, 12, 0.5, 0, 0);
+}
+
+.alfred-img {
+    -fx-effect: dropshadow(gaussian, #d4af37, 12, 0.5, 0, 0);
+}
+
+.error-img {
+    -fx-effect: dropshadow(gaussian, #8b0000, 15, 0.6, 0, 0);
+}
+
+/* ==================== INPUT FIELD ==================== */
+
+#userInput {
+    -fx-background-color: rgba(20, 20, 30, 0.9);
+    -fx-text-fill: #d0d0d0;
+    -fx-prompt-text-fill: #606060;
+    -fx-background-radius: 8;
+    -fx-border-color: #3d3d5c;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 14px;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+}
+
+#userInput:focused {
+    -fx-border-color: #d4af37;
+    -fx-effect: dropshadow(gaussian, rgba(212, 175, 55, 0.3), 8, 0, 0, 0);
+}
+
+/* ==================== SEND BUTTON ==================== */
+
+#sendButton {
+    -fx-background-color: linear-gradient(to bottom, #3d3d2a, #2a2a1a);
+    -fx-text-fill: #d4af37;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #5c5c3d;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 5, 0, 0, 2);
+}
+
+#sendButton:hover {
+    -fx-background-color: linear-gradient(to bottom, #4a4a35, #3d3d2a);
+    -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.3), 8, 0, 0, 2);
+}
+
+#sendButton:pressed {
+    -fx-background-color: #2a2a1a;
+    -fx-effect: none;
+}
+
+#sendButton:disabled {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #404040;
+    -fx-border-color: #303030;
+    -fx-effect: none;
+}
