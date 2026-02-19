@@ -20,7 +20,7 @@ Alfred is a **desktop task management application** with a snotty English butler
 
 1. Ensure you have Java 17 or above installed
 2. Download the latest `alfred.jar` from [Releases](../../releases)
-3. Double-click the file or run `java -jar alfred.jar`
+3. Run `java -jar alfred.jar`
 4. Type commands and press Enter
 
 ## Command Summary
