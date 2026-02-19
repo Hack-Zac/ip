@@ -30,7 +30,7 @@ Alfred is your personal task management butler, made to help you keep track of y
 1. Ensure you have **Java 17** or above installed on your computer
 2. Download the latest `alfred.jar` from the [releases page](../../releases)
 3. Copy the file to the folder you want to use as the home folder for Alfred
-4. Double-click the file or run `java -jar alfred.jar` in your terminal
+4. Run `java -jar alfred.jar` in your terminal
 5. A GUI window should appear with a welcome message from Alfred
 6. Type commands in the text box and press Enter or click Send
 
