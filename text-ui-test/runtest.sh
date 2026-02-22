@@ -1,38 +1,41 @@
 #!/usr/bin/env bash
 
-# create bin directory if it doesn't exist
-if [ ! -d "../bin" ]
-then
+# Create bin directory if it doesn't exist
+if [ ! -d "../bin" ]; then
     mkdir ../bin
 fi
 
-# delete output from previous run
-if [ -e "./ACTUAL.TXT" ]
-then
+# Delete output from previous run
+if [ -e "./ACTUAL.TXT" ]; then
     rm ACTUAL.TXT
 fi
 
-# compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
-then
+# Delete data file to start fresh
+if [ -e "./data/alfred.txt" ]; then
+    rm ./data/alfred.txt
+fi
+
+# Compile the code into the bin folder
+if ! find ../src/main/java -name "*.java" | xargs javac -d ../bin -cp ../bin; then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
-# run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Duke < input.txt > ACTUAL.TXT
+# Run the program, feed commands from input.txt and redirect output to ACTUAL.TXT
+java -classpath ../bin alfred.Alfred < input.txt > ACTUAL.TXT
 
-# convert to UNIX format
+# Convert line endings for comparison
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
-dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT 2>/dev/null || true
 
-# compare the output to the expected output
-diff ACTUAL.TXT EXPECTED-UNIX.TXT
-if [ $? -eq 0 ]
-then
+# Compare the output
+if diff ACTUAL.TXT EXPECTED-UNIX.TXT > /dev/null 2>&1; then
     echo "Test result: PASSED"
     exit 0
 else
     echo "Test result: FAILED"
+    echo ""
+    echo "===== DIFFERENCES ====="
+    diff ACTUAL.TXT EXPECTED-UNIX.TXT
     exit 1
 fi

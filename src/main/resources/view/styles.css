@@ -1,6 +1,10 @@
 .root {
     -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-background-color: linear-gradient(to bottom, #0a0a0f, #12121a, #0d0d12);
+    -fx-background-image: url("/images/cave.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+
 }
 
 /* ==================== SCROLL PANE ==================== */

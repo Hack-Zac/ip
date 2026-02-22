@@ -1,5 +1,7 @@
 package alfred;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.util.Duration;
 
 
@@ -27,15 +27,21 @@ public class MainWindow extends AnchorPane {
 
     private Alfred alfred;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/bat.png"));
-    private Image alfredImage = new Image(this.getClass().getResourceAsStream("/images/butler.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/bat.png"));
+    private final Image alfredImage = new Image(this.getClass().getResourceAsStream("/images/butler.png"));
 
+    /**
+     * Initialize the GUI.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         // Show welcome message
         dialogContainer.getChildren().add(
-                DialogBox.getAlfredDialog("Good evening Master Wayne! How may I be of service today?", alfredImage)
+            DialogBox.getAlfredDialog("Good evening Master Wayne! How may I be of service today?", alfredImage)
+        );
+        dialogContainer.getChildren().add(
+            DialogBox.getAlfredDialog("Type help to get a list of commands", alfredImage)
         );
     }
 
@@ -77,8 +83,8 @@ public class MainWindow extends AnchorPane {
             alfredDialog = DialogBox.getAlfredDialog(response, alfredImage);
         }
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getAlfredDialog(response, alfredImage)
+            DialogBox.getUserDialog(input, userImage),
+            DialogBox.getAlfredDialog(response, alfredImage)
         );
         userInput.clear();
     }

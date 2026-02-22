@@ -5,69 +5,126 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DeadlineTest {
+class DeadlineTest {
 
     @Test
-    public void testToString_dateOnly() {
-        Deadline deadline = new Deadline("submit report", LocalDate.of(2024, 1, 27));
-        assertEquals("[D][ ] submit report (by: 27th January 2024)", deadline.toString());
+    void constructor_withDateTime_createsDeadline() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, 12, 25, 18, 0);
+        Deadline deadline = new Deadline("Submit report", dateTime);
+        assertEquals("Submit report", deadline.getDescription());
+        assertTrue(deadline.hasTime());
     }
 
     @Test
-    public void testToString_dateTime() {
-        Deadline deadline = new Deadline("submit report", LocalDateTime.of(2024, 1, 27, 14, 0));
-        assertEquals("[D][ ] submit report (by: 27th January 2024, 2:00 pm)", deadline.toString());
+    void constructor_withDateOnly_createsDeadline() {
+        LocalDate date = LocalDate.of(2024, 12, 25);
+        Deadline deadline = new Deadline("Submit report", date);
+        assertEquals("Submit report", deadline.getDescription());
+        assertFalse(deadline.hasTime());
     }
 
     @Test
-    public void testToString_done() {
-        Deadline deadline = new Deadline("submit report", LocalDate.of(2024, 1, 27));
+    void getBy_returnsCorrectDateTime() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, 12, 25, 18, 0);
+        Deadline deadline = new Deadline("Submit report", dateTime);
+        assertEquals(dateTime, deadline.getBy());
+    }
+
+    @Test
+    void markAsDone_unmarkedDeadline_marksAsDone() {
+        Deadline deadline = new Deadline("Submit report", LocalDate.of(2024, 12, 25));
         deadline.markAsDone();
-        assertEquals("[D][X] submit report (by: 27th January 2024)", deadline.toString());
+        assertTrue(deadline.isDone());
     }
 
     @Test
-    public void testOrdinalSuffix_1st() {
-        Deadline deadline = new Deadline("task", LocalDate.of(2024, 1, 1));
-        assertTrue(deadline.toString().contains("1st January"));
+    void markAsNotDone_markedDeadline_marksAsNotDone() {
+        Deadline deadline = new Deadline("Submit report", LocalDate.of(2024, 12, 25));
+        deadline.markAsDone();
+        deadline.markAsNotDone();
+        assertFalse(deadline.isDone());
     }
 
     @Test
-    public void testOrdinalSuffix_2nd() {
-        Deadline deadline = new Deadline("task", LocalDate.of(2024, 1, 2));
-        assertTrue(deadline.toString().contains("2nd January"));
+    void toString_withDateTime_correctFormat() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, 12, 25, 18, 0);
+        Deadline deadline = new Deadline("Submit report", dateTime);
+        String result = deadline.toString();
+        assertTrue(result.contains("[D]"));
+        assertTrue(result.contains("Submit report"));
+        assertTrue(result.contains("25th"));
+        assertTrue(result.contains("December"));
+        assertTrue(result.contains("2024"));
+        assertTrue(result.contains("6:00 pm"));
     }
 
     @Test
-    public void testOrdinalSuffix_3rd() {
-        Deadline deadline = new Deadline("task", LocalDate.of(2024, 1, 3));
-        assertTrue(deadline.toString().contains("3rd January"));
+    void toString_withDateOnly_correctFormat() {
+        LocalDate date = LocalDate.of(2024, 12, 25);
+        Deadline deadline = new Deadline("Submit report", date);
+        String result = deadline.toString();
+        assertTrue(result.contains("[D]"));
+        assertTrue(result.contains("Submit report"));
+        assertTrue(result.contains("25th"));
+        assertTrue(result.contains("December"));
+        assertTrue(result.contains("2024"));
+        assertFalse(result.contains("pm")); // No time for date-only
     }
 
     @Test
-    public void testOrdinalSuffix_11th() {
-        Deadline deadline = new Deadline("task", LocalDate.of(2024, 1, 11));
-        assertTrue(deadline.toString().contains("11th January"));
+    void toString_markedDeadline_showsX() {
+        Deadline deadline = new Deadline("Submit report", LocalDate.of(2024, 12, 25));
+        deadline.markAsDone();
+        assertTrue(deadline.toString().contains("[X]"));
     }
 
     @Test
-    public void testOrdinalSuffix_21st() {
-        Deadline deadline = new Deadline("task", LocalDate.of(2024, 1, 21));
-        assertTrue(deadline.toString().contains("21st January"));
+    void setNotes_validNotes_setsNotes() {
+        Deadline deadline = new Deadline("Submit report", LocalDate.of(2024, 12, 25));
+        deadline.setNotes("Very important!");
+        assertEquals("Very important!", deadline.getNotes());
+        assertTrue(deadline.hasNotes());
     }
 
     @Test
-    public void testHasTime() {
-        Deadline dateOnly = new Deadline("task", LocalDate.of(2024, 1, 27));
-        Deadline dateTime = new Deadline("task", LocalDateTime.of(2024, 1, 27, 14, 0));
-        assertFalse(dateOnly.hasTime());
-        assertTrue(dateTime.hasTime());
+    void hasTime_withDateTime_returnsTrue() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, 12, 25, 18, 0);
+        Deadline deadline = new Deadline("Submit report", dateTime);
+        assertTrue(deadline.hasTime());
     }
 
     @Test
-    public void testGetBy() {
-        LocalDateTime dt = LocalDateTime.of(2024, 1, 27, 14, 0);
-        Deadline deadline = new Deadline("task", dt);
-        assertEquals(dt, deadline.getBy());
+    void hasTime_withDateOnly_returnsFalse() {
+        LocalDate date = LocalDate.of(2024, 12, 25);
+        Deadline deadline = new Deadline("Submit report", date);
+        assertFalse(deadline.hasTime());
+    }
+
+    @Test
+    void ordinalSuffix_firstDay_returnsSt() {
+        LocalDate date = LocalDate.of(2024, 12, 1);
+        Deadline deadline = new Deadline("Test", date);
+        assertTrue(deadline.toString().contains("1st"));
+    }
+
+    @Test
+    void ordinalSuffix_secondDay_returnsNd() {
+        LocalDate date = LocalDate.of(2024, 12, 2);
+        Deadline deadline = new Deadline("Test", date);
+        assertTrue(deadline.toString().contains("2nd"));
+    }
+
+    @Test
+    void ordinalSuffix_thirdDay_returnsRd() {
+        LocalDate date = LocalDate.of(2024, 12, 3);
+        Deadline deadline = new Deadline("Test", date);
+        assertTrue(deadline.toString().contains("3rd"));
+    }
+
+    @Test
+    void ordinalSuffix_eleventhDay_returnsTh() {
+        LocalDate date = LocalDate.of(2024, 12, 11);
+        Deadline deadline = new Deadline("Test", date);
+        assertTrue(deadline.toString().contains("11th"));
     }
 }

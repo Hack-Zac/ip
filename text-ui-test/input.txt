@@ -1,16 +1,16 @@
 todo read book
-deadline submit report /by 2024-01-27
-deadline meeting prep /by 2024-01-27 14:00
-event conference /from 2024-01-27 /to 2024-01-29
-event standup /from 2024-01-27 09:00 /to 2024-01-27 09:30
+todo buy groceries
+deadline submit report /by 2024-12-25 18:00
+event team meeting /from 2024-12-20 14:00 /to 2024-12-20 16:00
 list
 mark 1
 list
+find book
+find xyz
 unmark 1
 delete 2
 list
-find book
-note 1 Chapter 5 is important
+note 1 This is important!
 list
-blah
+help
 bye
