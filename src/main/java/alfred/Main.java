@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Alfred alfred = new Alfred("./data/alfred.txt");
+    private final Alfred alfred = new Alfred("./data/alfred.txt");
 
     @Override
     public void start(Stage stage) {

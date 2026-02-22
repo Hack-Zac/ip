@@ -1,20 +1,18 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-
+    id 'checkstyle'
 }
-
-
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     String javaFxVersion = '17.0.7'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+
 
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
@@ -31,29 +29,30 @@ dependencies {
 
 }
 
-test {
-    useJUnitPlatform()
-}
 
 application {
-    mainClass = 'alfred.Launcher'
+    mainClass.set("alfred.Launcher")
 }
 
-javafx {
-    version = "17.0.6"
-    modules = ['javafx.controls', 'javafx.fxml']
+shadowJar {
+    archiveBaseName = "alfred"
+    archiveClassifier = null
 }
 
 run {
     standardInput = System.in
-    enableAssertions = true
-
 }
 
-shadowJar {
-    archiveBaseName.set('alfred')
-    archiveClassifier.set('')
-    archiveVersion.set('')
-    mergeServiceFiles()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
+checkstyle {
+    toolVersion = '11.0.0'
+}
+
+test {
+    useJUnitPlatform()
 }

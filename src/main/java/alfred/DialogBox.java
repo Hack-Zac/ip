@@ -18,7 +18,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 /**
- * Represents a dialog box with text and an image.
+ * Represents a dialog box in the chat interface.
+ * Contains a text message and an avatar image, styled differently
+ * for user messages, Alfred responses, and error messages.
  */
 public class DialogBox extends HBox {
     @FXML
@@ -26,6 +28,13 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Creates a new DialogBox with the specified text and avatar image.
+     * Loads the FXML layout and initializes the text content and avatar.
+     *
+     * @param text The message text to display, supports **bold** formatting.
+     * @param img  The avatar image to display.
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -43,6 +52,10 @@ public class DialogBox extends HBox {
 
     /**
      * Builds the TextFlow content from the given text.
+     * Parses **bold** markdown syntax and applies appropriate styling.
+     * Text between ** markers is rendered in bold.
+     *
+     * @param text The text to parse and display.
      */
     private void buildTextFlow(String text) {
         String[] parts = text.split("\\*\\*");
@@ -59,6 +72,10 @@ public class DialogBox extends HBox {
 
     /**
      * Sets up the avatar image with square cropping and circular clipping.
+     * Crops the image to a square from the top-center and applies a
+     * circular mask to create a round avatar.
+     *
+     * @param img The image to use as the avatar.
      */
     private void setupAvatar(Image img) {
         displayPicture.setImage(img);
@@ -78,7 +95,8 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Flips the dialog box so the image is on the left.
+     * Flips the dialog box layout so the image appears on the left.
+     * Used for Alfred's responses to visually distinguish them from user messages.
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
@@ -87,6 +105,14 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Creates a dialog box for user messages.
+     * The avatar appears on the right side with user-specific styling.
+     *
+     * @param text The user's message text.
+     * @param img  The user's avatar image.
+     * @return A styled DialogBox for the user message.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.dialog.getStyleClass().add("user-label");
@@ -94,6 +120,14 @@ public class DialogBox extends HBox {
         return db;
     }
 
+    /**
+     * Creates a dialog box for Alfred's responses.
+     * The avatar appears on the left side with Alfred-specific styling.
+     *
+     * @param text Alfred's response text.
+     * @param img  Alfred's avatar image.
+     * @return A styled DialogBox for Alfred's response.
+     */
     public static DialogBox getAlfredDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
@@ -102,6 +136,14 @@ public class DialogBox extends HBox {
         return db;
     }
 
+    /**
+     * Creates a dialog box for error messages from Alfred.
+     * The avatar appears on the left side with error-specific styling.
+     *
+     * @param text The error message text.
+     * @param img  Alfred's avatar image.
+     * @return A styled DialogBox for the error message.
+     */
     public static DialogBox getAlfredErrorDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();

@@ -1,26 +1,23 @@
-Hello! I'm Alfred
+Good Evening Master Wayne!
 
-What can I do for you?
+How may I be of service today?
 
+Type 'help' to see available commands.
 1. [T][ ] read book
-2. [D][ ] submit report (by: 27th January 2024)
-3. [D][ ] meeting prep (by: 27th January 2024, 2:00 pm)
-4. [E][ ] conference (from: 27th January 2024 to: 29th January 2024)
-5. [E][ ] standup (from: 27th January 2024, 9:00 am to: 27th January 2024, 9:30 am)
+2. [T][ ] buy groceries
+3. [D][ ] submit report (by: 25th December 2024, 6:00 pm)
+4. [E][ ] team meeting (from: 20th December 2024, 2:00 pm to: 20th December 2024, 4:00 pm)
 1. [T][X] read book
-2. [D][ ] submit report (by: 27th January 2024)
-3. [D][ ] meeting prep (by: 27th January 2024, 2:00 pm)
-4. [E][ ] conference (from: 27th January 2024 to: 29th January 2024)
-5. [E][ ] standup (from: 27th January 2024, 9:00 am to: 27th January 2024, 9:30 am)
+2. [T][ ] buy groceries
+3. [D][ ] submit report (by: 25th December 2024, 6:00 pm)
+4. [E][ ] team meeting (from: 20th December 2024, 2:00 pm to: 20th December 2024, 4:00 pm)
 1. [T][ ] read book
-2. [D][ ] meeting prep (by: 27th January 2024, 2:00 pm)
-3. [E][ ] conference (from: 27th January 2024 to: 29th January 2024)
-4. [E][ ] standup (from: 27th January 2024, 9:00 am to: 27th January 2024, 9:30 am)
+2. [D][ ] submit report (by: 25th December 2024, 6:00 pm)
+3. [E][ ] team meeting (from: 20th December 2024, 2:00 pm to: 20th December 2024, 4:00 pm)
 1. [T][ ] read book
-   Notes: Chapter 5 is important
-2. [D][ ] meeting prep (by: 27th January 2024, 2:00 pm)
-3. [E][ ] conference (from: 27th January 2024 to: 29th January 2024)
-4. [E][ ] standup (from: 27th January 2024, 9:00 am to: 27th January 2024, 9:30 am)
+   Notes: This is important!
+2. [D][ ] submit report (by: 25th December 2024, 6:00 pm)
+3. [E][ ] team meeting (from: 20th December 2024, 2:00 pm to: 20th December 2024, 4:00 pm)
 CRIKEY!!! I'm sorry Sir, but I don't know what that means :-(
 
 Goodbye Master Wayne! Happy Hunting!
