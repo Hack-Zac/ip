@@ -1,12 +1,15 @@
 # Alfred User Guide
+
 Why do we fall Master Wayne? So we can learn to pick ourselves up!
 ![Ui](Ui.png)
 
-Alfred is your personal task management butler, made to help you keep track of your todos, deadlines, and events with ease as you fight on the streets of Gotham.
+Alfred is your personal task management butler, made to help you keep track of your todos, deadlines, and events with
+ease as you fight on the streets of Gotham.
 
 ---
 
 ## Table of Contents
+
 - [Quick Start](#quick-start)
 - [Features](#features)
     - [Adding a Todo](#adding-a-todo-todo)
@@ -45,11 +48,13 @@ Adds a simple task without any date/time.
 **Format:** `todo <description>`
 
 **Example:**
+
 ```
 todo investigate Arkham
 ```
 
 **Expected output:**
+
 ```
 Very Good Sir, I've added this task:
   [T][ ] investigate Arkham
@@ -68,12 +73,14 @@ Adds a task with a due date (and optional time).
 - Time format (optional): `HH:mm` (e.g., `14:00`)
 
 **Examples:**
+
 ```
 deadline disable Joker's bomb /by 2024-01-27
 deadline assasinate Robin /by 2024-01-27 14:00
 ```
 
 **Expected output:**
+
 ```
 Very Good Sir, I've added this task:
   [D][ ] disable Joker's bomb (by: 27th January 2024)
@@ -89,12 +96,14 @@ Adds a task with a start and end date/time.
 **Format:** `event <description> /from <date> [time] /to <date> [time]`
 
 **Examples:**
+
 ```
 event date with Talia /from 2024-01-27 /to 2024-01-29
 event Wayne Enterprises meeting /from 2024-01-27 14:00 /to 2024-01-27 16:00
 ```
 
 **Expected output:**
+
 ```
 Got it. I've added this task:
   [E][ ] date with Talia (from: 27th January 2024 to: 29th January 2024)
@@ -112,6 +121,7 @@ Shows all tasks in your list.
 **Format:** `list`
 
 **Expected output:**
+
 ```
 1. [T][ ] investigate Arkham
 2. [D][ ] disable Joker's bomb (by: 27th January 2024)
@@ -127,11 +137,13 @@ Marks a task as completed.
 **Format:** `mark <task number>`
 
 **Example:**
+
 ```
 mark 1
 ```
 
 **Expected output:**
+
 ```
 Very Good Sir, I've marked this task as done:
   [T][X] investigate Arkham
@@ -146,11 +158,13 @@ Marks a task as not completed.
 **Format:** `unmark <task number>`
 
 **Example:**
+
 ```
 unmark 1
 ```
 
 **Expected output:**
+
 ```
 Very Good Sir, I've marked this task as not done yet:
   [T][ ] investigate Arkham
@@ -165,11 +179,13 @@ Removes a task from the list.
 **Format:** `delete <task number>`
 
 **Example:**
+
 ```
 delete 2
 ```
 
 **Expected output:**
+
 ```
 Noted. I've removed this task:
   [D][ ] disable Joker's bomb (by: 27th January 2024)
@@ -185,11 +201,13 @@ Searches for tasks containing a keyword.
 **Format:** `find <keyword>`
 
 **Example:**
+
 ```
 find Arkham
 ```
 
 **Expected output:**
+
 ```
 Here are the matching tasks in your list, Sir:
 1. [T][ ] investigate Arkham
@@ -201,14 +219,18 @@ Here are the matching tasks in your list, Sir:
 
 Adds a note to an existing task.
 
+Only one note can be added per task
+
 **Format:** `note <task number> <note text>`
 
 **Example:**
+
 ```
 note 1 meetup with Gordon
 ```
 
 **Expected output:**
+
 ```
 Very Good Sir, I've added a note to this task:
   [T][ ] investigate Arkham
@@ -224,6 +246,7 @@ Exits the application. Your tasks are automatically saved.
 **Format:** `bye`
 
 **Expected output:**
+
 ```
 Goodbye Sir, Happy Hunting!
 ```
@@ -234,12 +257,13 @@ The application will close after 1.5 seconds.
 
 ## Date and Time Formats
 
-| Type | Format | Example |
-|------|--------|---------|
-| Date only | `yyyy-MM-dd` | `2024-01-27` |
+| Type          | Format             | Example            |
+|---------------|--------------------|--------------------|
+| Date only     | `yyyy-MM-dd`       | `2024-01-27`       |
 | Date and time | `yyyy-MM-dd HH:mm` | `2024-01-27 14:00` |
 
 Dates are displayed in proper English format:
+
 - `27th January 2024`
 - `1st February 2024, 2:00 PM`
 - `3rd March 2024`
@@ -256,18 +280,18 @@ Dates are displayed in proper English format:
 
 ## Command Summary
 
-| Action | Format |
-|--------|--------|
-| Add todo | `todo <description>` |
-| Add deadline | `deadline <description> /by <date> [time]` |
-| Add event | `event <description> /from <date> [time] /to <date> [time]` |
-| List tasks | `list` |
-| Mark done | `mark <number>` |
-| Unmark | `unmark <number>` |
-| Delete | `delete <number>` |
-| Find | `find <keyword>` |
-| Add note | `note <number> <text>` |
-| Exit | `bye` |
+| Action       | Format                                                      |
+|--------------|-------------------------------------------------------------|
+| Add todo     | `todo <description>`                                        |
+| Add deadline | `deadline <description> /by <date> [time]`                  |
+| Add event    | `event <description> /from <date> [time] /to <date> [time]` |
+| List tasks   | `list`                                                      |
+| Mark done    | `mark <number>`                                             |
+| Unmark       | `unmark <number>`                                           |
+| Delete       | `delete <number>`                                           |
+| Find         | `find <keyword>`                                            |
+| Add note     | `note <number> <text>`                                      |
+| Exit         | `bye`                                                       |
 
 ## Acknowledgements
 
