@@ -274,4 +274,5 @@ Dates are displayed in proper English format:
 - UI design inspiration adapted from [AK-matrix/ip](https://github.com/AK-matrix/ip)
 - [Butler icons](https://www.flaticon.com/free-icons/butler) created by Freepik - Flaticon
 - [Bat icons](https://www.flaticon.com/free-icons/bat) created by Freepik - Flaticon
+- [Cave icons](https://www.freepik.com/free-photos-vectors/dark-cave) created by Freepik - flaticon
 
